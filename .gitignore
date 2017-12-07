@@ -13,4 +13,4 @@ linear/*
 fcnet/*
 model2/*
 model1/*
-__pycahce__/*
+__pycache__/*
