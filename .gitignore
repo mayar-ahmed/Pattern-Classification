@@ -1,0 +1,16 @@
+diamond/*
+ellipse/*
+line/*
+augment/*
+.idea/*
+*.iml
+data/*
+try.py
+*.txt
+data/*
+data_1000/*
+linear/*
+fcnet/*
+model2/*
+model1/*
+__pycahce__/*
