@@ -1,0 +1,77 @@
+experiment 0 :
+overfit small data (xsm,ysm)
+
+experiment1:
+-3conv layers, 1fc
+-try augmentation
+-no dropout
+-learning rate 1e-3
+-adam
+->no overfitting
+->val accuracy 82%
+
+experiment2:
+-same as 1
+-learning rate 8e-4
+-normalize data
+-very slow, 70%, might get better but with more than 20 epochs
+
+
+experiment3:
+-normalize
+-add dropout 0.3
+-learning rate 1e-3
+
+-experiment4:
+-add another dense layer :64
+-overfit data to validate:done
+-then try without it
+->accuracy 72% , most of the time validation higher than training
+
+experiment5 :
+same as 4, add bacth norm before activations
+learning rate 0.1
+rmsprop
+-->faster, reaches 80% but huge gap between train and val accurac
+
+experiment6 :
+add dropout
+-->mafesh fayda
+stuck at training accuracy in 40s (barely moves)
+trid adam, also slow
+
+experiment8 = 6  again :
+remvove batch norm, dropout
+add a 4th conv layer and overfit >done
+try normal data with rms prop
+reaches 90 percent without overfittng, buts large gap at the end
+97%train, 93 val
+rms prop ,1e-3
+
+experiment7 :
+same as 6, added dropout after fc layers
+stuck in 40's->60 trainng acc and validation higher than training
+
+experiment9:
+same with shuffling data
+best model : 94% validation accuracy
+
+experiment10 :
+add dropout (0.3) and 0.5 after fully connected layers
+->training looks weird (validation higher than accuracy most of the time)
+but no overfitting
+training almost 93-94 and validation 93%
+
+experiment11:
+-load 2000 data
+-dropout of 0.1 after fc layers
+-filter sizes to 32
+-stride of first layer only is 2, others 1
+-learning rate 1e-3
+-add another fc layer (128)
+-best val accuracy: 94%, with 98% train accuracy
+-better than experiment 10
+
+experiment12:
+-add l2 regularizaation to all layers, value=0.05
+-still not implemeneted

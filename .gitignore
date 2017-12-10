@@ -1,14 +1,13 @@
 diamond/*
 ellipse/*
 line/*
-augment/*
 .idea/*
 *.iml
-data/*
 try.py
-*.txt
 data/*
 data_1000/*
+data_2000/*
+augmented_training_data/*
 linear/*
 fcnet/*
 model2/*

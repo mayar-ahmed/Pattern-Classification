@@ -1,0 +1,13 @@
+1- fc net not possible with 256*256, needs too many neurons
+2-model.py
+after shuffling data (1000) , rms prop with 1e-3 
+validation accuracy 94.4% & train accuracy 98%
+
+experiment 6,8,9,10 -> best accuracy , check their tensorboards
+adding dropout removed overfitting but validation higher than training accuracy
+not sure if that's correct
+
+2- model2.py ->very slow and hugr overfitting
+-first try 1000 then 2000
+np dropout or anything
+-doesn't reach higher accuracy than model 1 (unnecessary complexity)

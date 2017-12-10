@@ -1,0 +1,3 @@
+after adding hog, accuracy around 70-80% but can't fix overfitting
+right now changing regularization
+didn't normalize extracted features(caused nan values so i used them as is)

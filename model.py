@@ -7,15 +7,15 @@ from time import time
 import os
 import numpy as np
 
-expno=10
+expno=11
 directory="model1/experiments/exp{}/checkpoints/".format(expno)
 if not os.path.exists(directory):
     os.makedirs(directory)
 
-x_train=np.load("data_1000/x_train.npy")
-y_train=np.load("data_1000/y_train.npy")
-x_val=np.load("data_1000/x_val.npy")
-y_val=np.load("data_1000/y_val.npy")
+x_train=np.load("data/x_train.npy")
+y_train=np.load("data/y_train.npy")
+x_val=np.load("data/x_val.npy")
+y_val=np.load("data/y_val.npy")
 
 N= x_train.shape[0]
 ind_list = [i for i in range(N)]
@@ -35,28 +35,32 @@ model.add(Conv2D(32,(5,5), strides=2,input_shape=(256, 256,1)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
-model.add(Conv2D(48,(3,3) ,strides=2))
+model.add(Conv2D(32,(3,3) ,strides=1))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
-model.add(Conv2D(64,(3,3) ,strides=1 ))
+model.add(Conv2D(32,(3,3) ,strides=1 ))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
-model.add(Conv2D(64,(3,3) ,strides=1))
+model.add(Conv2D(32,(3,3) ,strides=1))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
 
 model.add(Flatten())
+model.add(Dense(128))
+model.add(Activation('relu'))
+model.add(Dropout(0.1))
+
 model.add(Dense(64))
 model.add(Activation('relu'))
-model.add(Dropout(0.3))
+model.add(Dropout(0.1))
 
 
 model.add(Dense(32))
 model.add(Activation('relu'))
-model.add(Dropout(0.5))
+model.add(Dropout(0.1))
 
 model.add(Dense(3))
 model.add(Activation('softmax'))
@@ -71,6 +75,4 @@ tensorboard=TensorBoard(log_dir="model1/experiments/exp{}/summaries".format(expn
 adam=RMSprop(lr=1e-3)
 
 model.compile(optimizer=adam,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
-model.fit(x_train,y_train,validation_data=(x_val,y_val),batch_size=32,callbacks=[tensorboard,checkpoint],epochs=20)
-
-print(model.summary())
+model.fit(x_train,y_train,validation_data=(x_val,y_val), shuffle=True, batch_size=32,callbacks=[tensorboard,checkpoint],epochs=20)

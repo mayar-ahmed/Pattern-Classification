@@ -1,0 +1,14 @@
+-discard the previous data
+-open load_data script, give the function call the path which contains 
+the folders of images, rename them to diamond,ellipse,line
+
+-load data will read it, split into train, validation and save x_train, y_train in data folder
+
+-data is shuffled and of size (N ,256,256) ,no need to do anything 
+
+-if you need more training data, run augmentation script, it will increase training data size to 3000
+and save xt_aug, yt_aug of size (N,256,256,1) in data folder
+
+-validation data will stay as it is (classifier shouldn't see it at all during training
+which is why i don't augment it)
+
