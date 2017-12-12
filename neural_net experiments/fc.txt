@@ -1,0 +1,27 @@
+using 4000 training data
+exp0:
+hog feature
+5 layers + final +softmax
+adam learning rate 1e-3
+no dropout or bn or reg
+overfitting: train accuracy almost 100% and val caccuracy increasing but arounf 70%
+
+exp1:
+same as 1, add dropout after layers
+validation acc increases but still overfitting
+
+exp2:
+add regulazrization 8e-3
+dropout 0.3 on all layers
+train:90% , validatiom 80%
+
+exp3:
+reg 5e-3
+adam 1e-3
+feature extraction
+use augmented training data
+dropout 0.2 after all layers
+->validation accuracy reaches 97%, both train and validation imrove together
+but best validation is saved when training accuracy is lower
+(train was 95%)
+train increases b3d keda l97 bas elvalidation flepoch dy mt7sntsh (Actually got worse)

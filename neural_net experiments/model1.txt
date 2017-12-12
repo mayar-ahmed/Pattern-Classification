@@ -71,7 +71,15 @@ experiment11:
 -add another fc layer (128)
 -best val accuracy: 94%, with 98% train accuracy
 -better than experiment 10
+--momken n3ml add ldropout wnshof
 
 experiment12:
--add l2 regularizaation to all layers, value=0.05
--still not implemeneted
+-same experiment as 11 but using augmented training data only
+-validation reached 100% while training is still 90%
+-after training a while, they start increasing together to 97%
+but best val accuracy saved is 100%
+so not sure whether to take it or not
+-finished training with 97% training and 96% validation
+
+
+
