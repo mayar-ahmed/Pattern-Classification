@@ -28,5 +28,4 @@ def hog(images):
 
         data.append(feat)
         print(feat.shape)
-    numpy.stack(data)
-    return data
+    return numpy.stack(data)
