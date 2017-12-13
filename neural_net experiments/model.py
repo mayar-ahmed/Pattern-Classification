@@ -21,7 +21,6 @@ y_train=np.load("../data/yt_aug.npy")
 
 x_val=np.load("../data/x_val.npy")
 x_val=x_val.reshape(x_val.shape + (1,))
-print("x_val after reshaping" ,x_val.shape)
 y_val=np.load("../data/y_val.npy")
 
 

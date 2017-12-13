@@ -1,7 +1,7 @@
-
 from keras.preprocessing.image import ImageDataGenerator
 
 import numpy as np
+import os
 
 #take care augmentation takes 4 channel (n, w,h, depth)
 def augment_data(cls):
@@ -48,6 +48,8 @@ def augment_data(cls):
         fill_mode='nearest')
 
     dir="augmented_training_data"
+    if not os.path.exists(dir):
+        os.makedirs(dir)
     i=0
     x_b=[]
     y_b=[]
@@ -91,6 +93,3 @@ def augment_data(cls):
 
 ###################################################################
 augment_data(0)
-
-
-

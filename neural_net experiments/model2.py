@@ -75,8 +75,8 @@ filepath="model2/experiments/exp{}/checkpoints/weights-best-{{val_acc:.2f}}.hdf5
 checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 tensorboard=TensorBoard(log_dir="model2/experiments/exp{}/summaries".format(expno))
 
-adam=RMSprop(lr=1e-3)
+rms=RMSprop(lr=1e-3)
 
-model.compile(optimizer=adam,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
+model.compile(optimizer=rms,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 model.fit(x_train,y_train,validation_data=(x_val,y_val),batch_size=32,shuffle=True,callbacks=[tensorboard,checkpoint],epochs=20)
 

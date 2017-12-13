@@ -7,9 +7,9 @@ from keras.callbacks import TensorBoard,ModelCheckpoint
 from time import time
 import os
 import numpy as np
-from features import *
-
-expno=3
+from HOG import *
+from HOG import *
+expno=4
 
 reg=5e-3
 directory="fcnet/experiments/exp{}/checkpoints/".format(expno)
@@ -21,30 +21,15 @@ y_train=np.load("../data/yt_aug.npy")
 x_val=np.load("../data/x_val.npy")
 y_val=np.load("../data/y_val.npy")
 
-xt_feats=extract_features(x_train,[hog_feature],verbose=True)
-xv_feats=extract_features(x_val,[hog_feature],verbose=True)
+x_train=x_train.reshape((-1,256,256))
 
+xt_feats=hog(x_train)
+xv_feats=hog(x_val)
 
-#extract hog deatures for xtrain and validation
-# xt_feats=np.load("data/xt_feats.npy")
-# xv_feats=np.load("data/xv_feats.npy")
-#
-# mean_feat = np.mean(xt_feats, axis=0, keepdims=True)
-# xt_feats -= mean_feat
-# xv_feats -= mean_feat
-#
-# # Preprocessing: Divide by standard deviation. This ensures that each feature
-# # has roughly the same scale.
-# std_feat = np.std(xt_feats, axis=0, keepdims=True)
-# xt_feats /= std_feat
-# xv_feats /= std_feat
-
-# Preprocessing: Add a bias dimension
 
 model = Sequential()
 
-#kernal initialier is uniform
-#model.add(Flatten(input_shape=(256,256,1)))
+
 model.add(Dense(1024,input_shape=(xt_feats.shape[1],) ,kernel_regularizer=regularizers.l2(reg)))
 model.add(Activation('relu'))
 model.add(Dropout(0.2))
@@ -77,7 +62,7 @@ filepath="fcnet/experiments/exp{}/checkpoints/weights-best-{{val_acc:.2f}}.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 tensorboard=TensorBoard(log_dir="fcnet/experiments/exp{}/summaries".format(expno))
 
-sgd=Adam(1e-3)
+adam=Adam(1e-3)
 
-model.compile(optimizer=sgd,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
+model.compile(optimizer=adam,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 model.fit(xt_feats,y_train,validation_data=(xv_feats,y_val),shuffle=True,batch_size=32,callbacks=[tensorboard,checkpoint],epochs=20)

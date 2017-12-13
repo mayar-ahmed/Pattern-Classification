@@ -13,4 +13,5 @@ neural_net experiments/fcnet/*
 neural_net experiments/model2/*
 neural_net experiments/model1/*
 neural_net experiments/data/*
+neural_net experiments/results/*
 __pycache__/*

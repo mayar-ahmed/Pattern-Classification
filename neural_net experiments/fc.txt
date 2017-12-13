@@ -25,3 +25,7 @@ dropout 0.2 after all layers
 but best validation is saved when training accuracy is lower
 (train was 95%)
 train increases b3d keda l97 bas elvalidation flepoch dy mt7sntsh (Actually got worse)
+
+exp4:
+-using mariam's hog features
+-same as experiment 3
