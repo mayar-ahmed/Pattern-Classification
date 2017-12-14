@@ -16,21 +16,16 @@ directory="fcnet/experiments/exp{}/checkpoints/".format(expno)
 if not os.path.exists(directory):
     os.makedirs(directory)
 
-x_train=np.load("../data/xt_aug.npy")
+x_train=np.load("../data/xt_feats.npy")
 y_train=np.load("../data/yt_aug.npy")
-x_val=np.load("../data/x_val.npy")
+x_val=np.load("../data/xv_feats.npy")
 y_val=np.load("../data/y_val.npy")
-
-x_train=x_train.reshape((-1,256,256))
-
-xt_feats=hog(x_train)
-xv_feats=hog(x_val)
 
 
 model = Sequential()
 
 
-model.add(Dense(1024,input_shape=(xt_feats.shape[1],) ,kernel_regularizer=regularizers.l2(reg)))
+model.add(Dense(1024,input_shape=(9216,) ,kernel_regularizer=regularizers.l2(reg)))
 model.add(Activation('relu'))
 model.add(Dropout(0.2))
 
@@ -65,4 +60,5 @@ tensorboard=TensorBoard(log_dir="fcnet/experiments/exp{}/summaries".format(expno
 adam=Adam(1e-3)
 
 model.compile(optimizer=adam,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
-model.fit(xt_feats,y_train,validation_data=(xv_feats,y_val),shuffle=True,batch_size=32,callbacks=[tensorboard,checkpoint],epochs=20)
+#model.fit(x_train,y_train,validation_data=(x_val,y_val),shuffle=True,batch_size=32,callbacks=[tensorboard,checkpoint],epochs=20)
+model.save("fcnet/model.h5")

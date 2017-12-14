@@ -28,4 +28,9 @@ train increases b3d keda l97 bas elvalidation flepoch dy mt7sntsh (Actually got 
 
 exp4:
 -using mariam's hog features
--same as experiment 3
+-same as experiment 3, regulrization 1e-2
+-dropout 0.1
+-plateaus at 84, but val accuracy is 97 when train is 70%
+
+
+--best experiment:3

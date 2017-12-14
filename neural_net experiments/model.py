@@ -72,3 +72,4 @@ rms=RMSprop(lr=1e-3)
 
 model.compile(optimizer=rms,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 model.fit(x_train,y_train,validation_data=(x_val,y_val), shuffle=True, batch_size=32,callbacks=[tensorboard,checkpoint],epochs=20)
+#model.save("model1/model.h5")

@@ -9,13 +9,16 @@ exp1:
 use 1000 data and add batch normalization, increase learning rate to 1e-2
 converges fast bu val accuracy isa very low (stuck at 30s) while training is in 90s
 
-exp2:
-with batch normaliztion add dropout of 0.05, learning rate is 1e-2
-still huge gap between train and validation
 
-exp3:
+exp2 :
 remove batch normalization
 learning rte 1e-3
 dropout 0.1 after each layer
 94%validation accuracy
 
+exp3:
+use new data (validation about 75 images)
+--not run yet
+
+
+--so far best accuracy is experiment2
