@@ -8,8 +8,8 @@ from keras import regularizers
 
 import os
 import numpy as np
-
-expno=12
+from keras.utils import plot_model
+expno=13
 
 directory="model1/experiments/exp{}/checkpoints/".format(expno)
 if not os.path.exists(directory):
@@ -37,7 +37,7 @@ model.add(MaxPooling2D(pool_size=(2,2)))
 
 model.add(Conv2D(32,(3,3) ,strides=1 ))
 model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2,2),))
+model.add(MaxPooling2D(pool_size=(2,2)))
 
 model.add(Conv2D(32,(3,3) ,strides=1))
 model.add(Activation('relu'))
@@ -72,4 +72,5 @@ rms=RMSprop(lr=1e-3)
 
 model.compile(optimizer=rms,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 model.fit(x_train,y_train,validation_data=(x_val,y_val), shuffle=True, batch_size=32,callbacks=[tensorboard,checkpoint],epochs=20)
-#model.save("model1/model.h5")
+model.save("model1/model.h5")
+plot_model(model, to_file='model1im.png' ,show_layer_names=False , show_shapes=False)

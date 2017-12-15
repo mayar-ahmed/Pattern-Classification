@@ -33,4 +33,5 @@ exp4:
 -plateaus at 84, but val accuracy is 97 when train is 70%
 
 
---best experiment:3
+experiment5:
+-using reduced number of features with same parameters of experiment 3

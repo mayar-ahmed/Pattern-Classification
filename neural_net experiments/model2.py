@@ -6,7 +6,7 @@ from keras.callbacks import TensorBoard,ModelCheckpoint
 from time import time
 import os
 import numpy as np
-
+from keras.utils import plot_model
 expno=3
 directory="model2/experiments/exp{}/checkpoints/".format(expno)
 if not os.path.exists(directory):
@@ -73,5 +73,7 @@ tensorboard=TensorBoard(log_dir="model2/experiments/exp{}/summaries".format(expn
 rms=RMSprop(lr=1e-3)
 
 model.compile(optimizer=rms,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
-#model.fit(x_train,y_train,validation_data=(x_val,y_val),batch_size=32,shuffle=True,callbacks=[tensorboard,checkpoint],epochs=20)
-#model.save("model2/model.h5")
+model.fit(x_train,y_train,validation_data=(x_val,y_val),batch_size=32,shuffle=True,callbacks=[tensorboard,checkpoint],epochs=20)
+model.save("model2/model.h5")
+
+plot_model(model, to_file='model2im.png',show_layer_names=False , show_shapes=False)

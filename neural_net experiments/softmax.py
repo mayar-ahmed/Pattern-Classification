@@ -7,47 +7,31 @@ from keras.callbacks import TensorBoard,ModelCheckpoint
 from time import time
 import os
 import numpy as np
-from features import *
-expno=8
+from HOG import *
+expno=3
 directory="linear/experiments/exp{}/checkpoints/".format(expno)
 if not os.path.exists(directory):
     os.makedirs(directory)
 
-x_train=np.load("data/x_train.npy")
-y_train=np.load("data/y_train.npy")
-x_val=np.load("data/x_val.npy")
-y_val=np.load("data/y_val.npy")
+x_train=np.load("../data/xt_feats.npy")
+y_train=np.load("../data/yt_aug.npy")
+x_val=np.load("../data/xv_feats.npy")
+y_val=np.load("../data/y_val.npy")
 
-x_sm=np.load("data_1000/x_train1.npy")
-y_sm=np.load("data_1000/y_train1.npy")
-x_v=np.load("data_1000/x_val1.npy")
-y_v=np.load("data_1000/y_val1.npy")
+mean_feat= np.mean(x_train, axis=0)
+std=np.std(x_train, axis=0)
 
-#extract hog deatures for xtrain and validation
-xt_feats=np.load("data/xt_feats.npy")
-xv_feats=np.load("data/xv_feats.npy")
+# x_train-=mean_feat
+# x_val-=mean_feat
+# x_train/=std
+# x_val/=std
 
-# mean_feat = np.mean(xt_feats, axis=0, keepdims=True)
-# xt_feats -= mean_feat
-# xv_feats -= mean_feat
-#
-# # Preprocessing: Divide by standard deviation. This ensures that each feature
-# # has roughly the same scale.
-# std_feat = np.std(xt_feats, axis=0, keepdims=True)
-# xt_feats /= std_feat
-# xv_feats /= std_feat
-
-# Preprocessing: Add a bias dimension
-X_train = np.hstack([xt_feats, np.ones((xt_feats.shape[0], 1))])
-X_val = np.hstack([xv_feats, np.ones((xv_feats.shape[0], 1))])
-
-print(X_train.shape)
-print(X_val.shape)
+reg=5e-4
 model = Sequential()
 
 #kernal initialier is uniform
 #model.add(Flatten(input_shape=(256,256,1)))
-model.add(Dense(3,kernel_regularizer=regularizers.l2(1),bias_regularizer=regularizers.l2(1), input_shape=(9217,)))
+model.add(Dense(3,kernel_regularizer=regularizers.l2(reg), input_shape=(1764,)))
 model.add(Activation('softmax'))
 
 #checkpoint
@@ -56,7 +40,8 @@ filepath="linear/experiments/exp{}/checkpoints/weights-best-{{val_acc:.2f}}.hdf5
 checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 tensorboard=TensorBoard(log_dir="linear/experiments/exp{}/summaries".format(expno))
 
-sgd=SGD(lr=5e-5)
+sgd=SGD(lr=8e-3)
 
 model.compile(optimizer=sgd,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
-model.fit(X_train,y_train,validation_data=(X_val,y_val),shuffle=True,batch_size=32,callbacks=[tensorboard,checkpoint],epochs=500)
+model.fit(x_train,y_train,validation_data=(x_val,y_val),shuffle=True,batch_size=16,callbacks=[tensorboard,checkpoint],epochs=300)
+model.save('linear/model.h5')

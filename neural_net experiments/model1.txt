@@ -81,6 +81,14 @@ but best val accuracy saved is 100%
 so not sure whether to take it or not
 -finished training with 97% training and 96% validation
 
+-experiment 13
+final run using last parameters
 
+best ecperiments: 13
+97 val, 98 train
 
-best ecperiments: 11-12
+99 val , 97 train
+
+100 val , 96 train
+
+93 val , 96 train

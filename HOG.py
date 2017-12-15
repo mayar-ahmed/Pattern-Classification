@@ -7,10 +7,11 @@ def hog(images):
     data = []
     for image in images:
         (feat, hog_image) = feature.hog(image, orientations=9,
-                                        pixels_per_cell=(8, 8),
-                                        cells_per_block=(2, 2),
+                                        pixels_per_cell=(18, 18),
+                                        cells_per_block=(1, 1),
                                         block_norm='L2',
-                                        visualise=True)
+                                        visualise=True
+                                        )
         '''fig, (ax1, ax2) = pyplot.subplots(1, 2, figsize=(8, 4), sharex=True, sharey=True)
         ax1.axis('off')
         ax1.imshow(image, cmap=pyplot.cm.gray)

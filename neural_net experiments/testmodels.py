@@ -36,6 +36,8 @@ def load_folder(folder_path):
     for path in glob.glob(folder_path+"/*.png"):
 
         s=img2array(path)
+        if s.shape==(256,256,3):
+            continue
         s=s.reshape((256,256,1))
         x.append(s)
 
@@ -130,7 +132,7 @@ def test_model(model,x,y,outpath):
     print("indexes of images which were misclassified : ")
     print(np.nonzero(diff))
     save_output(x,predicted_class,outpath)
-
+    return diff[diff!=0].shape[0]
 
 def create_dir(path):
     if not os.path.exists(path):
@@ -138,6 +140,7 @@ def create_dir(path):
 def main():
     #path to folder containg test folders
     #rename folder to "diamond, ellipse, line"
+    #input_path="/media/mayar/not_fun/year4/pattern/image classifier/"
     input_path="validation_data/"
 
 
@@ -146,7 +149,7 @@ def main():
 
     #path to folder which contains model & weights
     model_path="model1/model.h5"
-    weights_path="fcnet/experiments/exp3/checkpoints/weights-best-0.97.hdf5"
+    weights_path="model1/experiments/exp12/checkpoints/weights-best-0.97.hdf5"
 
     model=model_load(model_path,weights_path)
     #don't forget to change png to bmp
@@ -164,11 +167,11 @@ def main():
     create_dir(output_path+"line_results/")
 
 
-    test_model(model, xd,yd, output_path+"diamond_results/")
-    test_model(model, xe,ye, output_path+"ellipse_results/")
-    test_model(model, xl,yl, output_path+"line_results/")
+    mis1=test_model(model, xd,yd, output_path+"diamond_results/")
+    mis2=test_model(model, xe,ye, output_path+"ellipse_results/")
+    mis3=test_model(model, xl,yl, output_path+"line_results/")
+    total_mis= (mis1+mis2+mis3)/(yd.shape[0]+ ye.shape[0]+ yl.shape[0])
 
-
-
+    print("total accuracy" ,(1-total_mis)*100)
 
 main()

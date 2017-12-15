@@ -18,7 +18,8 @@ dropout 0.1 after each layer
 
 exp3:
 use new data (validation about 75 images)
---not run yet
+-- train 97% and validation 98%
 
 
---so far best accuracy is experiment2
+
+--best accuracy :experiment 3
