@@ -16,7 +16,8 @@ def hough(images):
     for image in images:
         h, theta, d = hough_line(image)
 
-        '''# Generating figure 1
+        '''
+        # Generating figure 1
         fig, axes = plt.subplots(1, 3, figsize=(15, 6),
                                  subplot_kw={'adjustable': 'box-forced'})
         ax = axes.ravel()
@@ -33,7 +34,7 @@ def hough(images):
         ax[1].set_ylabel('Distance (pixels)')
         ax[1].axis('image')
 
-        ax[2].imshow(image, cmap=cm.gray)
+         ax[2].imshow(image, cmap=cm.gray)
         for _, angle, dist in zip(*hough_line_peaks(h, theta, d)):
             y0 = (dist - 0 * np.cos(angle)) / np.sin(angle)
             y1 = (dist - image.shape[1] * np.cos(angle)) / np.sin(angle)
@@ -42,9 +43,8 @@ def hough(images):
         ax[2].set_ylim((image.shape[0], 0))
         ax[2].set_axis_off()
         ax[2].set_title('Detected lines')
-
         plt.tight_layout()
         plt.show()'''
-        data.append(h)
-        print(h.shape)
+        print(h.flatten().shape)
+        data.append(h.flatten())
     return np.stack(data)
