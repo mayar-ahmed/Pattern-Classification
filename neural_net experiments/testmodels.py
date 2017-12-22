@@ -14,13 +14,14 @@ import glob
 
 
 
+
 def img2array(path):
     """
 
     :param path: full path of image
     :return: numpy matrix of the image (256,256)
     """
-    img = misc.imread(path)
+    img = misc.imread(path, mode='L')
     s=np.array(img)
     return s
 
@@ -32,12 +33,11 @@ def load_folder(folder_path):
     :return: numpy array of images (N,256,256,1)
     """
     x=[]
-    print(glob.glob(folder_path+"/*.png"))
-    for path in glob.glob(folder_path+"/*.png"):
+    for path in glob.glob(folder_path+"/*.bmp"):
 
         s=img2array(path)
         if s.shape==(256,256,3):
-            continue
+            print('256,256,3')
         s=s.reshape((256,256,1))
         x.append(s)
 
@@ -141,30 +141,23 @@ def main():
     #path to folder containg test folders
     #rename folder to "diamond, ellipse, line"
     #input_path="/media/mayar/not_fun/year4/pattern/image classifier/"
-    input_path="validation_data/"
+    input_path="/media/mayar/not_fun/year4/pattern/image classifier/test_data/"
 
 
     #path to folder which which will contain the classification results
     output_path="results/"
 
     #path to folder which contains model & weights
-    model_path="model1/model.h5"
-    weights_path="model1/experiments/exp12/checkpoints/weights-best-0.97.hdf5"
-
+    model_path="/media/mayar/not_fun/year4/pattern/image classifier/neural_net experiments/model1/model.h5"
+    weights_path="/media/mayar/not_fun/year4/pattern/image classifier/neural_net experiments/model1/experiments/exp13/checkpoints/weights-best-1.00.hdf5"
     model=model_load(model_path,weights_path)
     #don't forget to change png to bmp
     xd,yd,xe,ye,xl,yl=get_test_data(input_path)
 
-    # if(model_path=="fcnet/model.h5"):
-    #     #extract features before loading
-    #     print("fully connected network")
-    #     xd=extract_features(xd,[hog_feature])
-    #     xe=extract_features(xe,[hog_feature])
-    #     xl=extract_features(xl,[hog_feature])
-    #create directories for saving results
     create_dir(output_path+"diamond_results/")
     create_dir(output_path+"ellipse_results/")
     create_dir(output_path+"line_results/")
+
 
 
     mis1=test_model(model, xd,yd, output_path+"diamond_results/")
